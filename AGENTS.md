@@ -4,61 +4,78 @@
 
 ## 1. Overview
 - **Project name:** Arabic Franko
-- **Purpose / goal:** Self-contained Arabic ↔ Franco transliteration tool, to be published as a public GitHub Pages site.
+- **Purpose / goal:** Self-contained Arabic ↔ Franco transliteration tool, published as a public GitHub Pages site.
 - **Owner:** Ahmed El3ssal
 - **Created:** 2026-11-18
-- **Status:** In progress — pending publish decisions confirmation
+- **Status:** Published and verified — live on GitHub Pages
 - **Working directory:** C:\Users\ahmed\Downloads\Arabic Franko
+- **Live URL:** https://el3ssal.github.io/arabic-franco/
+- **Repo:** https://github.com/el3ssal/arabic-franco (public)
 
 ## 2. Tech Stack
-- **Languages:** HTML, CSS, JavaScript (confirmed by file inspection — single file, inline `<style>` and inline `<script>`)
+- **Languages:** HTML, CSS, JavaScript (plain, single file, inline `<style>` and `<script>`)
 - **Frameworks / libraries:** None (no imports, no external URLs, no build step)
-- **Runtime / tooling:** Static file — served directly by GitHub Pages
+- **Runtime / tooling:** Static file — served directly by GitHub Pages (`build_type=legacy`)
 - **Package manager:** N/A
 
 ## 3. Repository Structure
 ```
 Arabic Franko/
+├── .nojekyll      (disables Jekyll processing)
+├── icon.ico       (site favicon)
 ├── AGENTS.md      (project context — this file)
-└── franko.html    (entire app: markup + CSS + JS)
+├── README.md      (usage docs, features, live link)
+├── franko.html    (original source file — rollback reference)
+└── index.html     (Pages entry point — copy of franko.html)
 ```
-- Planned: `index.html` (Pages entry point) and `.nojekyll` (disable Jekyll processing).
+- `index.html` and `franko.html` are byte-identical as of commit `7d8450e`.
 
 ## 4. Agent Responsibilities (what the AI agent will do)
 - [x] Confirm scope and target stack with Ahmed before coding
-- [ ] Propose a step-by-step plan before modifying files (per global AGENTS.md)
-- [ ] Implement features following project conventions
-- [ ] Write / update tests
-- [ ] Run build & lint verification
-- [ ] Update this AGENTS.md with decisions and progress
-- [ ] Suggest (never auto-execute) git commits
-- [ ] Keep .env / config untouched unless confirmed
+- [x] Propose a step-by-step plan before modifying files (per global AGENTS.md)
+- [x] Implement following project conventions
+- [x] Verify the deployed site in-browser (both transliteration directions, zero console errors)
+- [x] Update this AGENTS.md with decisions and progress
+- [x] Keep .env / config untouched unless confirmed
+- [ ] Suggest (never auto-execute) future commits
 
 ## 5. Conventions
 - **Naming:** snake_case for variables, functions, files (unless overridden)
 - **Styling / linting:** Plain HTML/CSS/JS — no linter configured; keep self-contained
-- **Commit style:** ask Ahmed for message; never auto-generate
+- **Commit style:** ask Ahmed for message; never auto-generate unless Ahmed explicitly delegates it
 - **Dependencies:** ask before adding (none required)
 
 ## 6. Git & Workflow
 - **Default branch:** main
-- **Repo visibility:** TBD — GitHub Pages (free) requires PUBLIC; confirm with Ahmed
-- **Repo name / URL:** TBD — determines `https://<owner>.github.io/<repo>/`
-- **Publishing:** GitHub via terminal (gh CLI)
+- **Repo visibility:** Public — required by free GitHub Pages; Ahmed approved 2026-11-18
+- **Repo name:** arabic-franco
+- **Publishing:** GitHub via terminal (`gh.exe` full path)
 - **Git identity:** Ahmed El3ssal <ahmedel3ssal1@gmail.com>
+- **Initial commit:** `7d8450e` — `feat: add Arabic-Franco transliterator and GitHub Pages setup`
+- **Pages config:** source `main` / `/`, HTTPS enforced, no custom domain
 
 ## 7. Environment & Config
 - Never modify .env / config without confirmation
 - No hardcoded secrets / API keys
 
 ## 8. Testing
-- Verify the published Pages URL loads and the app works in-browser after deployment
+- HTTP check: `status=200`, content length 22023, title and converter code present
+- `webfetch`: rendered page text matches expected UI
+- In-app browser: `عايز` → `3ayez` and `3ayez` → `عايز`; `consoleErrors=[]`
+- Pages build status polled until `built`
 
 ## 9. Decisions Log
 | Date | Decision | Rationale |
 |------|----------|-----------|
 | 2026-11-18 | Project is a plain static HTML file, no framework/build | File inspection: inline CSS/JS, zero external requests |
+| 2026-11-18 | Repo made Public | GitHub Pages free tier requires public; Ahmed explicitly approved |
+| 2026-11-18 | Repo named `arabic-franco` | Ahmed chose it; yields `https://el3ssal.github.io/arabic-franco/` |
+| 2026-11-18 | Copy `franko.html` to `index.html` instead of renaming | Pages needs `index.html`; original preserved as rollback reference (Copy Before Overhaul) |
+| 2026-11-18 | Added empty `.nojekyll` | Prevents Jekyll from processing a pure static site |
+| 2026-11-18 | Commit message authored by agent | Ahmed explicitly delegated: "اكتب انت رسالة commit" |
+| 2026-11-19 | Added `icon.ico` favicon, linked in `index.html` and `franko.html` | Ahmed supplied the icon; both files kept byte-identical |
 
 ## 10. Notes / Memory
 - Global memories live in ~/.config/opencode/.memories/
 - Path contains a space — always quote paths in shell commands.
+- Command history for this session: `~/.config/opencode/.memories/commands/2026-11-18-session-001.md`
