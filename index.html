@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-theme="light">
+<html lang="en" dir="ltr" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,6 +8,17 @@
   <meta name="theme-color" content="#eab308" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <title>Arabic ↔ Franco</title>
+  <script>
+    try {
+      (function () {
+        var savedTheme = localStorage.getItem("franko_theme_v2");
+        document.documentElement.setAttribute(
+          "data-theme",
+          savedTheme === "light" ? "light" : "dark"
+        );
+      })();
+    } catch (e) {}
+  </script>
   <style>
     :root {
       --bg: #09090b;
@@ -334,7 +345,7 @@
     const outputStats = document.getElementById("outputStats");
 
     let uiLang = localStorage.getItem("franko_lang_v2") || "en";
-    let theme = localStorage.getItem("franko_theme_v2") || "light";
+    let theme = localStorage.getItem("franko_theme_v2") || "dark";
     let isArToFranco = true;
     let clipboardDeniedOrPrompted = false;
 

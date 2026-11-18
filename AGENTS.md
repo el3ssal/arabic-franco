@@ -81,6 +81,8 @@ Arabic Franko/
 | 2026-11-19 | Added PWA manifest + PNG icons (192/512/180) | Chrome install/home-screen icon uses manifest PNGs, not the `.ico` favicon |
 | 2026-11-19 | No service worker added | Current Chrome install criteria (web.dev) do not require one |
 | 2026-11-19 | Replaced icons with a 512x512 source (`icon.ico` embeds a PNG) | Ahmed supplied a high-res icon; 512 used directly, 192/180 downscaled — removes upscaling blur |
+| 2026-11-19 | Default theme changed to dark; language default stays English | Ahmed requested dark default; `localStorage` already persisted both preferences across reloads |
+| 2026-11-19 | Added early inline theme script in `<head>` | Applies the saved theme before first paint to avoid a flash of the wrong theme |
 
 ## 10. Notes / Memory
 - Global memories live in ~/.config/opencode/.memories/
