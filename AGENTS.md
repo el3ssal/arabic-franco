@@ -78,8 +78,9 @@ Arabic Franko/
 | 2026-11-18 | Added empty `.nojekyll` | Prevents Jekyll from processing a pure static site |
 | 2026-11-18 | Commit message authored by agent | Ahmed explicitly delegated: "اكتب انت رسالة commit" |
 | 2026-11-19 | Added `icon.ico` favicon, linked in `index.html` and `franko.html` | Ahmed supplied the icon; both files kept byte-identical |
-| 2026-11-19 | Added PWA manifest + PNG icons (192/512/180) | Chrome install/home-screen icon uses manifest PNGs, not the `.ico` favicon; source `.ico` is only 32x32 so PNGs are upscaled |
+| 2026-11-19 | Added PWA manifest + PNG icons (192/512/180) | Chrome install/home-screen icon uses manifest PNGs, not the `.ico` favicon |
 | 2026-11-19 | No service worker added | Current Chrome install criteria (web.dev) do not require one |
+| 2026-11-19 | Replaced icons with a 512x512 source (`icon.ico` embeds a PNG) | Ahmed supplied a high-res icon; 512 used directly, 192/180 downscaled — removes upscaling blur |
 
 ## 10. Notes / Memory
 - Global memories live in ~/.config/opencode/.memories/
