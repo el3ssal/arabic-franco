@@ -5,17 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/x-icon" href="icon.ico" />
   <link rel="manifest" href="manifest.webmanifest" />
-  <meta name="theme-color" content="#eab308" />
+  <meta name="theme-color" content="#09090b" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <title>Arabic ↔ Franco</title>
   <script>
     try {
       (function () {
         var savedTheme = localStorage.getItem("franko_theme_v2");
+        var isLight = savedTheme === "light";
         document.documentElement.setAttribute(
           "data-theme",
-          savedTheme === "light" ? "light" : "dark"
+          isLight ? "light" : "dark"
         );
+        var themeColorMeta = document.querySelector('meta[name="theme-color"]');
+        if (themeColorMeta) {
+          themeColorMeta.setAttribute(
+            "content",
+            isLight ? "#fafafa" : "#09090b"
+          );
+        }
       })();
     } catch (e) {}
   </script>
@@ -333,6 +341,7 @@
     const themeBtn = document.getElementById("themeBtn");
     const sunIcon = document.getElementById("sunIcon");
     const moonIcon = document.getElementById("moonIcon");
+    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
     const inputText = document.getElementById("inputText");
     const outputText = document.getElementById("outputText");
@@ -382,6 +391,12 @@
       theme = newTheme;
       htmlEl.setAttribute("data-theme", theme);
       localStorage.setItem("franko_theme_v2", theme);
+      if (themeColorMeta) {
+        themeColorMeta.setAttribute(
+          "content",
+          theme === "dark" ? "#09090b" : "#fafafa"
+        );
+      }
       if (theme === "dark") {
         sunIcon.style.display = "block";
         moonIcon.style.display = "none";

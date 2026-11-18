@@ -10,7 +10,7 @@
  * up the new assets instead of serving the old cached copy forever.
  */
 
-const CACHE_NAME = "arabic-franco-v1";
+const CACHE_NAME = "arabic-franco-v2";
 
 const PRECACHE_URLS = [
   "./",

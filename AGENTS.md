@@ -85,6 +85,7 @@ Arabic Franko/
 | 2026-11-19 | Default theme changed to dark; language default stays English | Ahmed requested dark default; `localStorage` already persisted both preferences across reloads |
 | 2026-11-19 | Added early inline theme script in `<head>` | Applies the saved theme before first paint to avoid a flash of the wrong theme |
 | 2026-11-19 | Added `service-worker.js` for offline use | App is fully self-contained; precaches the app shell, network-first navigation with cached fallback. **Bump `CACHE_NAME` on every deploy.** |
+| 2026-11-19 | Matched PWA chrome to the dark app (`#09090b`) and made `<meta name="theme-color">` dynamic | Yellow manifest `theme_color` framed the dark app; SW cache bumped to `v2` so clients replace the old cached manifest |
 
 ## 10. Notes / Memory
 - Global memories live in ~/.config/opencode/.memories/
