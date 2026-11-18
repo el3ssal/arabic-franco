@@ -3,14 +3,15 @@
  * ------------------------------------------
  * Strategy:
  *  - Precache the full app shell on install.
- *  - Navigation requests: network-first, fall back to the cached page offline.
+ *  - Navigation requests: serve the cached app shell immediately and
+ *    refresh it in the background (stale-while-revalidate).
  *  - Other same-origin GETs: cache-first, then network (and cache the result).
  *
  * IMPORTANT: bump CACHE_NAME whenever you deploy changes, so clients pick
  * up the new assets instead of serving the old cached copy forever.
  */
 
-const CACHE_NAME = "arabic-franco-v2";
+const CACHE_NAME = "arabic-franco-v3";
 
 const PRECACHE_URLS = [
   "./",
@@ -58,14 +59,24 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Navigation: always try the network first, then the cached shell.
+  // Navigation: serve the cached shell instantly, then refresh it in the
+  // background so the app paints immediately (short splash on Android).
   if (request.mode === "navigate") {
     event.respondWith(
-      fetch(request).catch(() =>
-        caches
-          .match("./index.html")
-          .then((cached) => cached || caches.match("./"))
-      )
+      caches.match("./index.html").then((cached) => {
+        const network = fetch(request)
+          .then((response) => {
+            if (response && response.status === 200) {
+              const copy = response.clone();
+              caches
+                .open(CACHE_NAME)
+                .then((cache) => cache.put("./index.html", copy));
+            }
+            return response;
+          })
+          .catch(() => cached);
+        return cached || network;
+      })
     );
     return;
   }

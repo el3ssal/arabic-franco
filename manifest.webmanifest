@@ -4,7 +4,8 @@
   "description": "Convert text between Arabic and Franco (Latin-script Arabic).",
   "start_url": "./",
   "scope": "./",
-  "display": "standalone",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
   "background_color": "#09090b",
   "theme_color": "#09090b",
   "icons": [

@@ -86,6 +86,8 @@ Arabic Franko/
 | 2026-11-19 | Added early inline theme script in `<head>` | Applies the saved theme before first paint to avoid a flash of the wrong theme |
 | 2026-11-19 | Added `service-worker.js` for offline use | App is fully self-contained; precaches the app shell, network-first navigation with cached fallback. **Bump `CACHE_NAME` on every deploy.** |
 | 2026-11-19 | Matched PWA chrome to the dark app (`#09090b`) and made `<meta name="theme-color">` dynamic | Yellow manifest `theme_color` framed the dark app; SW cache bumped to `v2` so clients replace the old cached manifest |
+| 2026-11-19 | Switched PWA display to `fullscreen` (fallback `standalone`) | Installed WebAPK kept the yellow bottom nav bar; fullscreen removes the system bars. SW cache bumped to `v3` |
+| 2026-11-19 | Navigation switched to stale-while-revalidate | Installed PWA splash lasted ~1s; serving the cached shell instantly shortens it. Android's splash icon itself cannot be disabled from the manifest. |
 
 ## 10. Notes / Memory
 - Global memories live in ~/.config/opencode/.memories/
