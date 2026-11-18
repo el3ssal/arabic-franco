@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arabic ↔ Franco</title>
+  <style>
+    :root {
+      --bg: #09090b;
+      --bg-dots: #27272a;
+      --surface: #121215;
+      --surface-hover: #1c1c21;
+      --border: #27272a;
+      --text: #f4f4f5;
+      --muted: #a1a1aa;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --accent-text: #ffffff;
+      --shadow: 0 24px 48px rgba(0, 0, 0, 0.7);
+    }
+
+    [data-theme="light"] {
+      --bg: #fafafa;
+      --bg-dots: #d4d4d8;
+      --surface: #ffffff;
+      --surface-hover: #f4f4f5;
+      --border: #e4e4e7;
+      --text: #18181b;
+      --muted: #71717a;
+      --accent: #eab308;
+      --accent-hover: #ca8a04;
+      --accent-text: #18181b;
+      --shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: radial-gradient(var(--bg-dots) 1.25px, transparent 1.25px);
+      background-size: 20px 20px;
+      color: var(--text);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(12px, 3vw, 24px);
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 920px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: clamp(16px, 3.5vw, 26px);
+      box-shadow: var(--shadow);
+      transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 12px;
+    }
+
+    h1 {
+      font-size: clamp(1.15rem, 2.8vw, 1.4rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    button {
+      background: var(--surface-hover);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      user-select: none;
+    }
+
+    button:hover {
+      border-color: var(--muted);
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .icon-btn {
+      padding: 7px 10px;
+      min-width: 38px;
+      height: 36px;
+      background: var(--bg);
+    }
+
+    .icon-btn svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .lang-btn {
+      font-size: 0.8rem;
+      letter-spacing: 0.03em;
+      font-weight: 700;
+    }
+
+    button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--accent-text);
+      min-width: 72px;
+    }
+
+    button.primary:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 720px) {
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+    }
+
+    .box {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .box-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--muted);
+      min-height: 34px;
+    }
+
+    textarea {
+      width: 100%;
+      height: clamp(170px, 32vh, 250px);
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 1rem;
+      line-height: 1.65;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.15s ease, background-color 0.2s ease;
+    }
+
+    textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .box-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.76rem;
+      color: var(--muted);
+      padding: 0 4px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .legend {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      justify-content: center;
+    }
+
+    .chip {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      direction: ltr;
+    }
+
+    .chip span {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    @media (max-width: 420px) {
+      header {
+        margin-bottom: 16px;
+      }
+      button {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+      }
+      .chip {
+        font-size: 0.74rem;
+        padding: 3px 7px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 id="appTitle">Arabic ↔ Franco</h1>
+      <div class="header-controls">
+        <button id="langBtn" class="icon-btn lang-btn" title="Switch Language / تغيير اللغة" aria-label="Switch Language">ع</button>
+        <button id="themeBtn" class="icon-btn" title="Toggle Theme / تبديل المظهر" aria-label="Toggle Theme">
+          <svg id="sunIcon" viewBox="0 0 24 24" style="display: none;">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+          </svg>
+          <svg id="moonIcon" viewBox="0 0 24 24">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <div class="box">
+        <div class="box-header">
+          <span id="inputLabel">Text</span>
+          <div class="actions">
+            <button id="pasteBtn">Paste</button>
+            <button id="clearBtn">Clear</button>
+          </div>
+        </div>
+        <textarea id="inputText" placeholder="Type here..." dir="ltr"></textarea>
+        <div class="box-footer">
+          <span id="inputStats">0 chars | 0 words</span>
+        </div>
+      </div>
+
+      <div class="box">
+        <div class="box-header">
+          <span id="outputLabel">Result</span>
+          <div class="actions">
+            <button id="copyBtn" class="primary">Copy</button>
+          </div>
+        </div>
+        <textarea id="outputText" placeholder="Translation appears here automatically..." readonly dir="ltr"></textarea>
+        <div class="box-footer">
+          <span id="outputStats">0 chars | 0 words</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="chip"><span>2</span> = ء / أ</div>
+      <div class="chip"><span>3</span> = ع</div>
+      <div class="chip"><span>3' / gh</span> = غ</div>
+      <div class="chip"><span>5 / kh</span> = خ</div>
+      <div class="chip"><span>6</span> = ط</div>
+      <div class="chip"><span>6'</span> = ظ</div>
+      <div class="chip"><span>7</span> = ح</div>
+      <div class="chip"><span>8 / q</span> = ق</div>
+      <div class="chip"><span>9</span> = ص</div>
+      <div class="chip"><span>9'</span> = ض</div>
+      <div class="chip"><span>sh / 4</span> = ش</div>
+      <div class="chip"><span>th / dh</span> = ث / ذ</div>
+    </div>
+  </div>
+
+  <script>
+    const htmlEl = document.documentElement;
+    const appTitle = document.getElementById("appTitle");
+    const langBtn = document.getElementById("langBtn");
+    const themeBtn = document.getElementById("themeBtn");
+    const sunIcon = document.getElementById("sunIcon");
+    const moonIcon = document.getElementById("moonIcon");
+
+    const inputText = document.getElementById("inputText");
+    const outputText = document.getElementById("outputText");
+    const copyBtn = document.getElementById("copyBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const pasteBtn = document.getElementById("pasteBtn");
+    const inputLabel = document.getElementById("inputLabel");
+    const outputLabel = document.getElementById("outputLabel");
+    const inputStats = document.getElementById("inputStats");
+    const outputStats = document.getElementById("outputStats");
+
+    let uiLang = localStorage.getItem("franko_lang_v2") || "en";
+    let theme = localStorage.getItem("franko_theme_v2") || "light";
+    let isArToFranco = true;
+    let clipboardDeniedOrPrompted = false;
+
+    const i18n = {
+      ar: {
+        title: "العربي ↔ الفرانكو",
+        inputLabel: "النص",
+        outputLabel: "النتيجة",
+        paste: "لصق",
+        clear: "مسح",
+        copy: "نسخ",
+        copied: "Copied",
+        placeholderIn: "اكتب الكلام هنا...",
+        placeholderOut: "الترجمة هتظهر هنا تلقائياً...",
+        langSwitch: "EN",
+        stats: (c, w) => `${c} حرف | ${w} كلمة`
+      },
+      en: {
+        title: "Arabic ↔ Franco",
+        inputLabel: "Text",
+        outputLabel: "Result",
+        paste: "Paste",
+        clear: "Clear",
+        copy: "Copy",
+        copied: "Copied",
+        placeholderIn: "Type here...",
+        placeholderOut: "Translation appears here automatically...",
+        langSwitch: "ع",
+        stats: (c, w) => `${c} chars | ${w} words`
+      }
+    };
+
+    function applyTheme(newTheme) {
+      theme = newTheme;
+      htmlEl.setAttribute("data-theme", theme);
+      localStorage.setItem("franko_theme_v2", theme);
+      if (theme === "dark") {
+        sunIcon.style.display = "block";
+        moonIcon.style.display = "none";
+      } else {
+        sunIcon.style.display = "none";
+        moonIcon.style.display = "block";
+      }
+    }
+
+    function syncDirections() {
+      const defaultDir = uiLang === "ar" ? "rtl" : "ltr";
+
+      if (!inputText.value.trim()) {
+        inputText.dir = defaultDir;
+        outputText.dir = defaultDir;
+      } else {
+        inputText.dir = isArToFranco ? "rtl" : "ltr";
+        outputText.dir = isArToFranco ? "ltr" : "rtl";
+      }
+    }
+
+    function applyLanguage(newLang) {
+      uiLang = newLang;
+      localStorage.setItem("franko_lang_v2", uiLang);
+      htmlEl.lang = uiLang;
+      htmlEl.dir = uiLang === "ar" ? "rtl" : "ltr";
+
+      const t = i18n[uiLang];
+      appTitle.textContent = t.title;
+      document.title = t.title;
+      inputLabel.textContent = t.inputLabel;
+      outputLabel.textContent = t.outputLabel;
+      pasteBtn.textContent = t.paste;
+      clearBtn.textContent = t.clear;
+      copyBtn.textContent = t.copy;
+      langBtn.textContent = t.langSwitch;
+
+      inputText.placeholder = t.placeholderIn;
+      outputText.placeholder = t.placeholderOut;
+
+      syncDirections();
+      updateStats(inputText.value, inputStats);
+      updateStats(outputText.value, outputStats);
+    }
+
+    const arToFrancoDict = {
+      "انا": "ana", "أنا": "ana",
+      "انت": "enta", "إنت": "enta", "انتي": "enty", "إنتي": "enty",
+      "احنا": "e7na", "إحنا": "e7na",
+      "هو": "howa", "هي": "heya", "هم": "homa",
+      "ايه": "eh", "إيه": "eh",
+      "ليه": "leh", "فين": "fen", "امتى": "emta", "إمتى": "emta",
+      "ازيك": "ezayak", "إزيك": "ezayak", "ازيكم": "ezayokom",
+      "عامل": "3amel", "عاملة": "3amla", "عاملين": "3amlen",
+      "تمام": "tamam", "كويس": "kwayes", "كويسة": "kwayesa",
+      "الحمد": "el7amd", "لله": "lellah",
+      "ان": "in", "إن": "in", "شاء": "sha2", "الله": "allah",
+      "ماشي": "mashy", "حاضر": "7ader", "طيب": "tayeb",
+      "يلا": "yalla", "بينا": "bena",
+      "عشان": "3ashan", "علشان": "3alashan",
+      "مش": "mesh", "بس": "bas", "كده": "keda", "كدا": "keda",
+      "دلوقتي": "delwa2ty", "النهاردة": "elnaharda", "النهارده": "elnaharda",
+      "بكرة": "bokra", "بكره": "bokra", "امبارح": "embare7",
+      "عايز": "3ayez", "عايزة": "3ayza", "عايزين": "3ayzen",
+      "بحبك": "ba7ebak", "حبيبي": "7abiby", "يا": "ya",
+      "صاحبي": "sa7by", "اخويا": "a5oya", "أخويا": "a5oya",
+      "في": "fe", "فى": "fe", "من": "men", "على": "3ala", "علي": "3ala",
+      "مع": "ma3a", "ده": "da", "دي": "de", "دول": "dol",
+      "اللي": "elly", "اللى": "elly", "حد": "7ad", "حاجة": "7aga",
+      "شوية": "shwaya", "كتير": "kteer", "قوي": "awy", "اوي": "awy",
+      "ممكن": "momken", "لازم": "lazem", "اكيد": "akeed", "أكيد": "akeed",
+      "شكرا": "shokran", "شكراً": "shokran", "عفوا": "3afwan"
+    };
+
+    const francoToArDict = {
+      "ana": "أنا", "enta": "إنت", "enty": "إنتي", "enti": "إنتي",
+      "e7na": "إحنا", "howa": "هو", "heya": "هي", "homa": "هم",
+      "eh": "إيه", "eih": "إيه", "leh": "ليه", "leih": "ليه",
+      "fen": "فين", "fein": "فين", "emta": "إمتى",
+      "ezayak": "إزيك", "ezayek": "إزيك", "ezayokom": "إزيكم",
+      "3amel": "عامل", "3amla": "عاملة", "3amlen": "عاملين",
+      "tamam": "تمام", "tmam": "تمام", "kwayes": "كويس", "kways": "كويس",
+      "el7amd": "الحمد", "lellah": "لله", "el7amdolellah": "الحمد لله",
+      "insha2allah": "إن شاء الله", "inshallah": "إن شاء الله", "nsha2allah": "إن شاء الله",
+      "mashy": "ماشي", "mashi": "ماشي", "7ader": "حاضر", "tayeb": "طيب",
+      "yalla": "يلا", "yala": "يلا", "bena": "بينا", "beina": "بينا",
+      "3ashan": "عشان", "3shan": "عشان", "3alashan": "علشان",
+      "mesh": "مش", "msh": "مش", "bas": "بس", "bs": "بس",
+      "keda": "كده", "kda": "كدا",
+      "delwa2ty": "دلوقتي", "dlw2ty": "دلوقتي", "delwaty": "دلوقتي",
+      "elnaharda": "النهاردة", "nharda": "نهاردة",
+      "bokra": "بكرة", "bkra": "بكرة", "embare7": "إمبارح", "mbare7": "إمبارح",
+      "3ayez": "عايز", "3ayz": "عايز", "3ayza": "عايزة", "3ayzen": "عايزين",
+      "ba7ebak": "بحبك", "ba7ebek": "بحبك", "7abiby": "حبيبي", "7abibi": "حبيبي",
+      "ya": "يا", "sa7by": "صاحبي", "sa7bi": "صاحبي", "a5oya": "أخويا",
+      "fe": "في", "fi": "في", "men": "من", "mn": "من",
+      "3ala": "على", "3la": "على", "ma3a": "مع", "m3a": "مع",
+      "da": "ده", "de": "دي", "di": "دي", "dol": "دول",
+      "elly": "اللي", "elli": "اللي", "ely": "اللي",
+      "7ad": "حد", "7aga": "حاجة", "shwaya": "شوية", "shwya": "شوية",
+      "kteer": "كتير", "ktir": "كتير", "awy": "أوي", "awi": "أوي",
+      "momken": "ممكن", "mmkn": "ممكن", "lazem": "لازم", "lzm": "لازم",
+      "akeed": "أكيد", "akid": "أكيد", "shokran": "شكراً", "3afwan": "عفواً",
+      "wallahy": "والله", "wlahy": "والله", "ya3ny": "يعني", "y3ny": "يعني"
+    };
+
+    const arToFrancoMap = {
+      "ا": "a", "أ": "a", "إ": "e", "آ": "2a", "ء": "2", "ؤ": "2", "ئ": "2",
+      "ب": "b", "ت": "t", "ث": "th", "ج": "g", "ح": "7", "خ": "5",
+      "د": "d", "ذ": "z", "ر": "r", "ز": "z", "س": "s", "ش": "sh",
+      "ص": "9", "ض": "9'", "ط": "6", "ظ": "6'", "ع": "3", "غ": "3'",
+      "ف": "f", "ق": "8", "ك": "k", "ل": "l", "م": "m", "ن": "n",
+      "ه": "h", "ة": "a", "و": "w", "ي": "y", "ى": "a",
+      "َ": "a", "ُ": "o", "ِ": "e", "ْ": "", "ّ": "", "ً": "an", "ٌ": "on", "ٍ": "en",
+      "؟": "?", "،": ",", "؛": ";"
+    };
+
+    const francoMultiRules = [
+      ["3'", "غ"], ["6'", "ظ"], ["9'", "ض"], ["7'", "خ"], ["2'", "غ"],
+      ["sh", "ش"], ["ch", "ش"], ["kh", "خ"], ["gh", "غ"], ["th", "ث"],
+      ["dh", "ذ"], ["ph", "ف"], ["oo", "و"], ["ou", "و"], ["ee", "ي"],
+      ["ei", "ي"], ["ai", "اي"], ["aa", "ا"]
+    ];
+
+    const francoSingleMap = {
+      "2": "ء", "3": "ع", "4": "ش", "5": "خ", "6": "ط", "7": "ح", "8": "ق", "9": "ص",
+      "a": "ا", "b": "ب", "c": "ك", "d": "د", "e": "ي", "f": "ف", "g": "ج",
+      "h": "ه", "i": "ي", "j": "ج", "k": "ك", "l": "ل", "m": "م", "n": "ن",
+      "o": "و", "p": "ب", "q": "ق", "r": "ر", "s": "س", "t": "ت", "u": "و",
+      "v": "ف", "w": "و", "x": "كس", "y": "ي", "z": "ز",
+      "?": "؟", ",": "،", ";": "؛"
+    };
+
+    function convertArabicToFranco(text) {
+      const tokens = text.split(/(\s+|[؟،؛.,!?"'()\[\]{}])/);
+
+      return tokens.map(token => {
+        if (!token || /^\s+$/.test(token)) return token;
+        if (arToFrancoMap[token] && token.length === 1 && !/[\u0621-\u064A]/.test(token)) {
+          return arToFrancoMap[token];
+        }
+        if (/^[a-zA-Z0-9_]+$/.test(token)) return token;
+        if (arToFrancoDict[token]) return arToFrancoDict[token];
+
+        let word = token;
+        let prefix = "";
+
+        if (word.startsWith("ال") && word.length > 3) {
+          prefix = "el";
+          word = word.slice(2);
+        } else if (word.startsWith("وال") && word.length > 4) {
+          prefix = "wel";
+          word = word.slice(3);
+        } else if (word.startsWith("بال") && word.length > 4) {
+          prefix = "bel";
+          word = word.slice(3);
+        }
+
+        let result = prefix;
+        for (let i = 0; i < word.length; i++) {
+          const ch = word[i];
+          const next = word[i + 1];
+
+          if (next === "ّ" && arToFrancoMap[ch]) {
+            result += arToFrancoMap[ch] + arToFrancoMap[ch];
+            i++;
+            continue;
+          }
+
+          if ((ch === "أ" || ch === "إ") && i > 0) {
+            result += "2";
+            continue;
+          }
+
+          if (ch === "ا" && i === 0 && !prefix) {
+            result += "a";
+            continue;
+          }
+
+          result += arToFrancoMap[ch] !== undefined ? arToFrancoMap[ch] : ch;
+        }
+
+        return result;
+      }).join("");
+    }
+
+    function convertFrancoToArabic(text) {
+      const tokens = text.split(/(\s+|[?.,!;:"'()\[\]{}])/);
+
+      return tokens.map(token => {
+        if (!token || /^\s+$/.test(token)) return token;
+        if (token.length === 1 && francoSingleMap[token] && !/[a-zA-Z0-9]/.test(token)) {
+          return francoSingleMap[token];
+        }
+        if (/[\u0600-\u06FF]/.test(token)) return token;
+        if (/^\d+$/.test(token)) return token;
+
+        const lower = token.toLowerCase();
+        if (francoToArDict[lower]) return francoToArDict[lower];
+
+        let w = lower;
+        let prefix = "";
+
+        if (w.startsWith("el") && w.length > 3) {
+          prefix = "ال";
+          w = w.slice(2);
+        } else if (w.startsWith("al") && w.length > 3) {
+          prefix = "ال";
+          w = w.slice(2);
+        }
+
+        for (const [pattern, ar] of francoMultiRules) {
+          w = w.split(pattern).join(ar);
+        }
+
+        let out = prefix;
+        for (let i = 0; i < w.length; i++) {
+          const ch = w[i];
+
+          if (i === 0 && !prefix && /^[aeio]/.test(ch)) {
+            out += ch === "e" || ch === "i" ? "إ" : "أ";
+            continue;
+          }
+
+          if (i === w.length - 1 && (ch === "a" || ch === "h") && out.length >= 2) {
+            out += ch === "a" ? "ة" : "ه";
+            continue;
+          }
+
+          if (i > 0 && i < w.length - 1 && (ch === "e" || ch === "o") && /[ب-ي]/.test(out[out.length - 1])) {
+            if (ch === "o") out += "و";
+            continue;
+          }
+
+          out += francoSingleMap[ch] !== undefined ? francoSingleMap[ch] : ch;
+        }
+
+        return out;
+      }).join("");
+    }
+
+    function updateStats(text, element) {
+      const chars = text.length;
+      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+      element.textContent = i18n[uiLang].stats(chars, words);
+    }
+
+    function detectLanguage(text) {
+      const arabicChars = (text.match(/[\u0600-\u06FF]/g) || []).length;
+      const latinChars = (text.match(/[a-zA-Z]/g) || []).length;
+      if (arabicChars === 0 && latinChars === 0) return null;
+      return arabicChars >= latinChars;
+    }
+
+    function runConversion() {
+      const val = inputText.value;
+      updateStats(val, inputStats);
+
+      if (!val.trim()) {
+        outputText.value = "";
+        syncDirections();
+        updateStats("", outputStats);
+        return;
+      }
+
+      const detectedAr = detectLanguage(val);
+      if (detectedAr !== null) {
+        isArToFranco = detectedAr;
+      }
+
+      syncDirections();
+
+      const converted = isArToFranco
+        ? convertArabicToFranco(val)
+        : convertFrancoToArabic(val);
+
+      outputText.value = converted;
+      updateStats(converted, outputStats);
+    }
+
+    themeBtn.addEventListener("click", () => {
+      applyTheme(theme === "dark" ? "light" : "dark");
+    });
+
+    langBtn.addEventListener("click", () => {
+      applyLanguage(uiLang === "ar" ? "en" : "ar");
+    });
+
+    inputText.addEventListener("input", runConversion);
+
+    copyBtn.addEventListener("click", async () => {
+      if (!outputText.value) return;
+      try {
+        await navigator.clipboard.writeText(outputText.value);
+      } catch {
+        outputText.select();
+        document.execCommand("copy");
+      }
+      copyBtn.textContent = i18n[uiLang].copied;
+      setTimeout(() => {
+        copyBtn.textContent = i18n[uiLang].copy;
+      }, 1500);
+    });
+
+    clearBtn.addEventListener("click", () => {
+      inputText.value = "";
+      runConversion();
+      inputText.focus();
+    });
+
+    pasteBtn.addEventListener("click", async () => {
+      inputText.focus();
+
+      if (clipboardDeniedOrPrompted && window.location.protocol === "file:") {
+        document.execCommand("paste");
+        return;
+      }
+
+      try {
+        if (navigator.permissions && navigator.permissions.query) {
+          const status = await navigator.permissions.query({ name: "clipboard-read" });
+          if (status.state === "denied") {
+            clipboardDeniedOrPrompted = true;
+            return;
+          }
+        }
+        const text = await navigator.clipboard.readText();
+        clipboardDeniedOrPrompted = true;
+        inputText.value = text;
+        runConversion();
+      } catch {
+        clipboardDeniedOrPrompted = true;
+        document.execCommand("paste");
+      }
+    });
+
+    applyTheme(theme);
+    applyLanguage(uiLang);
+  </script>
+</body>
+</html>
