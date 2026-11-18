@@ -27,6 +27,7 @@ Arabic Franko/
 ├── icon-512.png   (web app manifest icon)
 ├── apple-touch-icon.png (iOS home screen icon, 180x180)
 ├── manifest.webmanifest (PWA install metadata)
+├── service-worker.js (offline caching)
 ├── AGENTS.md      (project context — this file)
 ├── README.md      (usage docs, features, live link)
 ├── franko.html    (original source file — rollback reference)
@@ -83,6 +84,7 @@ Arabic Franko/
 | 2026-11-19 | Replaced icons with a 512x512 source (`icon.ico` embeds a PNG) | Ahmed supplied a high-res icon; 512 used directly, 192/180 downscaled — removes upscaling blur |
 | 2026-11-19 | Default theme changed to dark; language default stays English | Ahmed requested dark default; `localStorage` already persisted both preferences across reloads |
 | 2026-11-19 | Added early inline theme script in `<head>` | Applies the saved theme before first paint to avoid a flash of the wrong theme |
+| 2026-11-19 | Added `service-worker.js` for offline use | App is fully self-contained; precaches the app shell, network-first navigation with cached fallback. **Bump `CACHE_NAME` on every deploy.** |
 
 ## 10. Notes / Memory
 - Global memories live in ~/.config/opencode/.memories/
